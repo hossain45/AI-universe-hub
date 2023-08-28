@@ -7,13 +7,18 @@ let getData = async () => {
 
 }
 
+let visit = (url) => {
+  console.log('clicked');
+  window.open(url, '_blank');
+}
 
 let displayTools = aiTools => {
   // console.log(aiTools);
   let toolsContainer = document.getElementById('tools-container')
   //create element
   aiTools.forEach(element => {
-    console.log(element);
+    console.log(element);    
+
     let toolsCard = document.createElement('div');
     toolsCard.classList = 'card card-compact bg-gray-100 shadow-xl w-96';
 
@@ -26,7 +31,9 @@ let displayTools = aiTools => {
       });
       return featuresList;
     }
-
+    let url = element.links[0].url
+    // console.log(url);
+    
     toolsCard.innerHTML = `
       <figure class="p-4">
         <img src="${element.image}" alt="" class="h-[300px] rounded-lg"/>
@@ -44,15 +51,13 @@ let displayTools = aiTools => {
         </div>
         <div>
           <div class="card-actions justify-center">
-            <button class="btn btn-primary">Try Now</button>
+            <button id="try-btn" class="btn btn-primary type="button"  onclick="visit('${url}')">Try Now</button>
           </div>
         </div>
       </div>
       </div>
     `
     toolsContainer.appendChild(toolsCard);
-  });
-
-
+  });  
 }
 getData();
