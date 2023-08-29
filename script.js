@@ -1,40 +1,46 @@
 let sortBtn = document.getElementById('sort');
+let seeMoreBtn = document.getElementById('see-more');
 let aiTools = [];
+let aiToolsDisplay = [];
 
 let getData = async () => {
   const response = await fetch('https://openapi.programming-hero.com/api/ai/tools');
   const data = await response.json();
   aiTools = data.data.tools;
-  // console.log(aiTools);
-  displayTools(aiTools)
+  // initially display 6 tools
+  aiToolsDisplay = aiTools.slice(0,6);
+  displayTools(aiToolsDisplay)
 }
 
-sortBtn.addEventListener('click', () => {
-  let sortedAiTools = [...aiTools];
-  sortedAiTools.sort((a, b) => {
-    let dateA = new Date(a.published_in);
-    let dateB = new Date(b.published_in);
-    return dateA - dateB;
-  })
-  // return sortedAiTools
-  console.log(sortedAiTools);
-  displayTools(sortedAiTools);
-})
-
+// function for try now button 
 let visit = (url) => {
   console.log('clicked');
   window.open(url, '_blank');
 }
+// function for see more button 
+let seeMore = () => {
+  aiToolsDisplay = aiTools;
+  displayTools(aiToolsDisplay);
+  seeMoreBtn.classList.add('hidden')
+}
+// function for sort button 
+sortBtn.addEventListener('click', () => {
+  aiToolsDisplay.sort((a, b) => {
+    let dateA = new Date(a.published_in);
+    let dateB = new Date(b.published_in);
+    return dateA - dateB;
+  })
+  // return aiTools
+  displayTools(aiToolsDisplay);
+})
 
+// main function to display
 let displayTools = aiTools => {
-  // console.log(aiTools);
   let toolsContainer = document.getElementById('tools-container')
   //clearing before taking another action
   toolsContainer.innerHTML = '';
   //create element
   aiTools.forEach(element => {
-    // console.log(element);    
-
     let toolsCard = document.createElement('div');
     toolsCard.classList = 'card card-compact bg-gray-100 shadow-xl w-96';
 
@@ -47,8 +53,8 @@ let displayTools = aiTools => {
       });
       return featuresList;
     }
+
     let url = element.links[0].url
-    // console.log(url);
     toolsCard.innerHTML = `
       <figure class="p-4">
         <img src="${element.image}" alt="" class="h-[300px] rounded-lg"/>
@@ -74,8 +80,6 @@ let displayTools = aiTools => {
     `
     toolsContainer.appendChild(toolsCard);
   });  
-}
-
-
+};
 
 getData();
