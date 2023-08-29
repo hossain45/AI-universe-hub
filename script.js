@@ -17,7 +17,7 @@ sortBtn.addEventListener('click', () => {
     return dateA - dateB;
   })
   // return sortedAiTools
-  // console.log(sortedAiTools);
+  console.log(sortedAiTools);
   displayTools(sortedAiTools);
 })
 
@@ -29,6 +29,8 @@ let visit = (url) => {
 let displayTools = aiTools => {
   // console.log(aiTools);
   let toolsContainer = document.getElementById('tools-container')
+  //clearing before taking another action
+  toolsContainer.innerHTML = '';
   //create element
   aiTools.forEach(element => {
     // console.log(element);    
@@ -71,7 +73,6 @@ let displayTools = aiTools => {
       </div>
     `
     toolsContainer.appendChild(toolsCard);
-    
   });  
 }
 
