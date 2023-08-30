@@ -57,7 +57,7 @@ let displayTools = aiTools => {
     let url = element.links[0].url
     toolsCard.innerHTML = `
       <figure class="p-4">
-        <img src="${element.image}" alt="" class="h-[300px] rounded-lg"/>
+        <img src="${element.image ? element.image : 'image404.png'}" alt="${element.image?'':'Image not found'}" class="h-[300px] rounded-lg"/>
       </figure>
       <div class="card-body">
         <h2 class="card-title">Features</h2>
